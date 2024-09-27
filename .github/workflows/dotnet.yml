@@ -35,11 +35,11 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      # - name: Install Dependencies
-      #   run: dotnet restore
+      - name: Install Dependencies
+        run: dotnet restore
 
-      # - name: Build Solution
-      #   run: dotnet build --configuration Release --no-restore
+      - name: Build Solution
+        run: dotnet build --configuration Release --no-restore
 
       # - name: Wait for SQL Server to be ready
       #   run: |
