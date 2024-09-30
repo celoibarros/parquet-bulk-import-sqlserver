@@ -1,82 +1,26 @@
 ﻿using ParquetBulkImporter.Services;
-using System.CommandLine;
+using System.Threading.Tasks;
 
 namespace ParquetBulkImporter
 {
-    public class Program
+    public class ParquetBulkImporter
     {
-        public static async Task<int> Main(string[] args)
-        {
-            // Define command line options
-            var connectionStringOption = new Option<string>(
-                name: "--connection-string",
-                description: "SQL Server connection string",
-                isRequired: true
-            );
+        private readonly string _folderPath;
+        private readonly string _filePattern;
+        private readonly string _tableName;
+        private readonly Services.ParquetBulkImporter _importer;
 
-            var folderPathOption = new Option<string>(
-                name: "--folder-path",
-                description: "Path to folder containing Parquet files",
-                isRequired: true
-            );
+         public ParquetBulkImporter(string connectionString, string folderPath, string filePattern, string tableName, bool dropTable=false, int parallel=1)
+         {
+            _importer = new Services.ParquetBulkImporter(connectionString, dropTable, parallel);
+            _folderPath = folderPath;
+            _filePattern = filePattern;
+            _tableName = tableName;
+            
+        }
 
-            var filePatternOption = new Option<string>(
-                name: "--file-pattern",
-                description: "File pattern to search for Parquet files (e.g., *.parquet)",
-                isRequired: true
-            );
-
-            var tableNameOption = new Option<string>(
-                name: "--table-name",
-                description: "Destination table name",
-                isRequired: true
-            );
-
-            var dropTableOption = new Option<bool>(
-                name: "--drop-table",
-                description: "Drop the destination table if it exists",
-                getDefaultValue: () => false
-            );
-
-            var parallelOption = new Option<int>(
-                name: "--parallel",
-                description: "Number of parallel tasks for importing files",
-                getDefaultValue: () => 1
-            );
-
-            // Create a root command with the defined options
-            var rootCommand = new RootCommand
-            {
-                connectionStringOption,
-                folderPathOption,
-                filePatternOption,
-                tableNameOption,
-                dropTableOption,
-                parallelOption
-            };
-
-            rootCommand.Description = "Parquet bulk import tool for SQL Server";
-
-            rootCommand.SetHandler(
-                async (string connectionString, string folderPath, string filePattern, string tableName, bool dropTable, int parallel) =>
-                {
-                    // Execute bulk import logic
-                    var importer = new ParquetBulkImporter(connectionString, dropTable, parallel);
-                    try
-                    {
-                        await importer.BulkImportAsync(folderPath, filePattern, tableName);
-                        Console.WriteLine("Bulk import completed successfully.");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"An error occurred: {ex.Message}");
-                    }
-                },
-                connectionStringOption, folderPathOption, filePatternOption, tableNameOption, dropTableOption, parallelOption
-            );
-
-            // Invoke the command handler
-            return await rootCommand.InvokeAsync(args);
+        public async Task Execute(){
+            await _importer.BulkImportAsync(_folderPath, _filePattern, _tableName);
         }
     }
 }

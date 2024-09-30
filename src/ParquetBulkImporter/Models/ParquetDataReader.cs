@@ -60,5 +60,30 @@ namespace ParquetBulkImporter.Models
         public decimal GetDecimal(int i) => (decimal)GetValue(i);
         public DateTime GetDateTime(int i) => (DateTime)GetValue(i);
         public IDataReader GetData(int i) => throw new NotImplementedException();
+
+        public DataTable GetSchemaTable()
+        {
+            DataTable schemaTable = new DataTable("SchemaTable");
+
+            schemaTable.Columns.Add("ColumnName", typeof(string));
+            schemaTable.Columns.Add("ColumnOrdinal", typeof(int));
+            schemaTable.Columns.Add("DataType", typeof(Type));
+            schemaTable.Columns.Add("DataTypeName", typeof(string));
+
+            for (int i = 0; i < _fields.Count; i++)
+            {
+                var field = _fields[i];
+
+                DataRow row = schemaTable.NewRow();
+                row["ColumnName"] = field.Name;
+                row["ColumnOrdinal"] = i;
+                row["DataType"] = field.ClrType;
+                row["DataTypeName"] = field.ClrType.Name;
+
+                schemaTable.Rows.Add(row);
+            }
+
+            return schemaTable;
+        }
     }
 }

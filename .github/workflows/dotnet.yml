@@ -36,42 +36,38 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Install Dependencies
-        run: dotnet restore
+        run: dotnet restore src/ParquetBulkImporter/ParquetBulkImporter.csproj
 
-      - name: Build Solution
-        run: dotnet build --configuration Release --no-restore
+      - name: Publish Solution
+        run: dotnet publish src/ParquetBulkImporter/ParquetBulkImporter.csproj -c release -r linux-x64
 
-      # - name: Wait for SQL Server to be ready
-      #   run: |
-      #     echo "Waiting for SQL Server to start..."
-      #     for i in {1..30}; do
-      #       if sqlcmd -S localhost -U sa -P "YourStrong!Passw0rd" -Q "SELECT 1" > /dev/null 2>&1; then
-      #         echo "SQL Server is up!"
-      #         break
-      #       fi
-      #       echo "Waiting for SQL Server..."
-      #       sleep 5
-      #     done
+      - name: Wait for SQL Server to be ready
+        run: |
+          echo "Waiting for SQL Server to start..."
+          for i in {1..30}; do
+            if sqlcmd -S localhost -U sa -P "YourStrong!Passw0rd" -Q "SELECT 1" > /dev/null 2>&1; then
+              echo "SQL Server is up!"
+              break
+            fi
+            echo "Waiting for SQL Server..."
+            sleep 5
+          done
 
-      # - name: Run Tests
-      #   env:
-      #     ConnectionStrings__Database: "Server=localhost;Database=TestDb;User Id=sa;Password=YourStrong!Passw0rd;"
-      #   run: dotnet test --configuration Release
+      - name: Run dotnet Tests
+        run: dotnet run tests/ParquetBulkImporterTests.csproj
 
-      # ### Python Setup and Testing ###
+      ### Python Setup and Testing ###
 
-      # - name: Set up Python
-      #   uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
       # - name: Install Python Dependencies
       #   run: |
       #     python -m pip install --upgrade pip
       #     pip install -r requirements.txt
 
-      # - name: Run Python Tests
-      #   env:
-      #     DB_CONNECTION_STRING: "Server=localhost;Database=TestDb;User Id=sa;Password=YourStrong!Passw0rd;"
-      #   run: |
-      #     python -m unittest discover -s tests
+      - name: Run Python Tests
+        run: |
+          python tests/parquet_bulk_import_test/test_import_parquet.py

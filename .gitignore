@@ -1,0 +1,6 @@
+src/ParquetBulkImporter/bin
+src/ParquetBulkImporter/obj
+tests/ParquetBulkImporter.Test/bin
+tests/ParquetBulkImporter.Test/obj
+**/__pycache__
+**/.pytest*
