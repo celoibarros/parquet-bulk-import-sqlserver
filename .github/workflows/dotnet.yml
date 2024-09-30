@@ -35,6 +35,10 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Run ls
+        run: |
+          ls -la
+
       - name: Install Dependencies
         run: dotnet restore src/ParquetBulkImporter/ParquetBulkImporter.csproj
 
