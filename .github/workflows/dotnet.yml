@@ -54,7 +54,7 @@ jobs:
           done
 
       - name: Run dotnet Tests
-        run: dotnet run tests/ParquetBulkImporterTests/ParquetBulkImporterTests.csproj
+        run: dotnet run --project tests/ParquetBulkImporterTests/ParquetBulkImporterTests.csproj
 
       ### Python Setup and Testing ###
 
