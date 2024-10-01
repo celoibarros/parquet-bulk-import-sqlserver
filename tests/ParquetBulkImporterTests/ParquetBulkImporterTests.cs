@@ -35,7 +35,8 @@ namespace ParquetBulkImporter.Tests
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            string folderPath = @"..\resources\";
+            string currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string folderPath = Path.Combine(currentDirectory, "../resources");
             string tableName = "dbo.import_parquet";
             string connectionString = "Driver={ODBC Driver 18 for SQL Server};Server=localhost;Database=TestDb;UserId=sa;Password=YourStrong!Passw0rd;";
             string filePattern = "*.parquet";
