@@ -13,7 +13,7 @@ class TestParquetBulkImporter(unittest.TestCase):
     def setUp(self):
         self.folder_path = os.path.abspath(os.path.dirname(os.path.realpath(__file__)) + r"/../resources/")
         self.table_name = "dbo.import_parquet"
-        self.connection_string = "Driver={ODBC Driver 18 for SQL Server};Server=localhost;Database=TestDb;UserId=sa;Password=YourStrong!Passw0rd;"
+        self.connection_string = "Driver={ODBC Driver 18 for SQL Server};Server=localhost;Database=TestDb;UID=sa;PWD=YourStrong!Passw0rd;TrustServerCertificate=True;"
         self.file_pattern = "*.parquet"
         self.drop_table = True
         self.parallel = 1

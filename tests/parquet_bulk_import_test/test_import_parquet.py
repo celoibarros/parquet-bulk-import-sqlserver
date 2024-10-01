@@ -12,7 +12,7 @@ from ParquetBulkImporter import ParquetBulkImporter
 
 folder_path = os.path.abspath(os.path.dirname(os.path.realpath(__file__)) + r"/../resources/")
 table_name = "dbo.import_parquet"
-connection_string = "Driver={ODBC Driver 18 for SQL Server};Server=localhost;Database=TestDb;UserId=sa;Password=YourStrong!Passw0rd;"
+connection_string = "Driver={ODBC Driver 18 for SQL Server};Server=localhost;Database=TestDb;UID=sa;PWD=YourStrong!Passw0rd;TrustServerCertificate=True;"
 file_pattern = "*.parquet"
 drop_table = True
 parallel = 1
