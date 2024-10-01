@@ -39,7 +39,7 @@ namespace ParquetBulkImporter.Tests
 
             string currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string projectDirectory = Directory.GetParent(currentDirectory)?.Parent?.Parent?.FullName;
-            string folderPath = Path.Combine(projectDirectory, "resources");
+            string folderPath = Path.Combine(projectDirectory, "../resources");
             string tableName = "dbo.import_parquet";
             string connectionString = "Driver={ODBC Driver 18 for SQL Server};Server=localhost;Database=TestDb;UserId=sa;Password=YourStrong!Passw0rd;";
             string filePattern = "*.parquet";
