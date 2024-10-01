@@ -3,6 +3,8 @@ using Xunit;
 using FluentAssertions;
 using ParquetBulkImporter;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Diagnostics;
 
 namespace ParquetBulkImporter.Tests
