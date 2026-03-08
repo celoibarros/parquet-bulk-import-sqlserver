@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Restore
+        run: dotnet restore tests/ParquetBulkImporterTests/ParquetBulkImporterTests.csproj
+
+      - name: Build
+        run: dotnet build src/ParquetBulkImporter/ParquetBulkImporter.csproj -c Release --no-restore
+
+      - name: Build tests
+        run: dotnet build tests/ParquetBulkImporterTests/ParquetBulkImporterTests.csproj -c Release --no-restore
+
+      - name: Run .NET tests
+        run: dotnet test tests/ParquetBulkImporterTests/ParquetBulkImporterTests.csproj -c Release --no-build
+
+      - name: Install Python dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -r tests/parquet_bulk_import_test/requirements.txt
+
+      - name: Run Python tests
+        run: python -m unittest discover -s tests/parquet_bulk_import_test -p "test_*.py"
