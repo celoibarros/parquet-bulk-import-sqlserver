@@ -76,6 +76,13 @@ python -m unittest discover -s tests/parquet_bulk_import_test -p "test_*.py"
 docker compose up -d
 ```
 
+
+## Releases
+
+- Create a version tag like `v0.1.0` and push it to trigger the `Release` workflow.
+- The workflow builds, tests, creates `.nupkg/.snupkg`, and publishes a GitHub Release.
+- To also publish to NuGet.org, add repository secret `NUGET_API_KEY`.
+
 ## Repository Layout
 
 - `src/ParquetBulkImporter`: library source
