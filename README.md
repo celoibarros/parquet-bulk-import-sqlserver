@@ -1,6 +1,12 @@
-# Parquet Bulk Import for SQL Server
+# Parquet to SQL Server Bulk Importer (.NET 8, Linux/Windows)
 
-`ParquetBulkImporter` is a .NET 8 library for high-throughput imports of Parquet files into SQL Server tables.
+[![CI](https://github.com/celoibarros/parquet-bulk-import-sqlserver/actions/workflows/ci.yml/badge.svg)](https://github.com/celoibarros/parquet-bulk-import-sqlserver/actions/workflows/ci.yml)
+
+`ParquetBulkImporter` is a .NET 8 library to import Parquet files into Microsoft SQL Server using bulk copy patterns for high-throughput ETL and data ingestion workloads.
+
+## Keywords
+
+Parquet, SQL Server, Bulk Insert, SqlBulkCopy, ETL, Data Engineering, .NET, C#, Linux, Windows.
 
 ## Features
 
@@ -15,12 +21,12 @@
 - .NET 8 SDK
 - Python 3.10+ (for Python tests)
 - SQL Server (local, container, or remote)
-- ODBC Driver 18 for SQL Server (for connection string compatibility)
+- ODBC Driver 18 for SQL Server
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/<your-username>/parquet-bulk-import-sqlserver.git
+git clone https://github.com/celoibarros/parquet-bulk-import-sqlserver.git
 cd parquet-bulk-import-sqlserver
 dotnet build src/ParquetBulkImporter/ParquetBulkImporter.csproj -c Release
 ```
@@ -44,7 +50,7 @@ await importer.Execute();
 
 ## Test Configuration
 
-Set these environment variables for integration tests:
+Set environment variables for integration tests:
 
 - `SQLSERVER_TEST_CONNECTION_STRING`
 - `PARQUET_TEST_FOLDER` (optional, default: `tests/resources`)
@@ -69,8 +75,6 @@ python -m unittest discover -s tests/parquet_bulk_import_test -p "test_*.py"
 ```bash
 docker compose up -d
 ```
-
-The default SQL Server endpoint is `localhost,1433` with credentials defined in `docker-compose.yml`.
 
 ## Repository Layout
 
