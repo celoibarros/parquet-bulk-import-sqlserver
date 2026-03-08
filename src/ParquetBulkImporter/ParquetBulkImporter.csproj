@@ -1,19 +1,34 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
     <PublishSingleFile>false</PublishSingleFile>
     <PublishTrimmed>false</PublishTrimmed>
     <SelfContained>false</SelfContained>
     <Platforms>x64</Platforms>
-</PropertyGroup>
+
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>ParquetBulkImporter</PackageId>
+    <Authors>celoibarros</Authors>
+    <Company>celoibarros</Company>
+    <Description>.NET 8 library for high-throughput Parquet to SQL Server bulk imports on Linux and Windows.</Description>
+    <PackageTags>parquet;sql-server;bulk-import;etl;dotnet;csharp</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/celoibarros/parquet-bulk-import-sqlserver</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/celoibarros/parquet-bulk-import-sqlserver</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.1" />
     <PackageReference Include="Parquet.Net" Version="5.2.0" />
-    
   </ItemGroup>
 
 </Project>
